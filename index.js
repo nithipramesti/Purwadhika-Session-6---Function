@@ -285,90 +285,140 @@ let fiterLoop = (arr, func) => {
 // arr[1] = "ma";
 // console.log(arr);
 
-// //NO 7 REVERSE WORDS
+// //NO 6 REVERSE WORDS
 // let revWords = (words) => {
-//   let wordsAr = [];
-//   let start = 0;
+//   let wordsAr = []; //array for storing the words
+//   let start = 0; //start index of each word
+
 //   for (let i = 0; i < words.length; i++) {
-//     wordsAr.push(words[i]);
-//     if (words[i] === " ") {
-//       let temp = wordsAr.slice(start, i);
-//       temp.reverse();
+//     wordsAr.push(words[i]); //put words into an array
+//     if ((words[i] === " ") | (i === words.length - 1)) {
+//       let temp = wordsAr.slice(start, i); //temporary array to save the reverse word
+//       temp.reverse(); //reverse each word (separated by space)
 
 //       for (let j = start; j < i; j++) {
-//         wordsAr[j] = temp[j - start];
+//         wordsAr[j] = temp[j - start]; //replace original word with the reverse version
 //       }
 
-//       start = i + 1;
+//       start = i + 1; //change start index to the character after space
 //     }
 //   }
 
-//   console.log(wordsAr);
+//   let reverseWord = wordsAr.join("");
+//   console.log(reverseWord);
 // };
 
-// let sentence = "Reverse words";
+// let sentence = "Reverse words for exercise";
 // revWords(sentence);
+// console.log(sentence.split(" ")); //use split
 
-//No 8
-let caesearChiper = (words, chip) => {
-  let ar = [];
+// //No 7
+// let caesearChiper = (words, chip) => {
+//   let ar = [];
 
-  for (let i = 0; i < words.length; i++) {
-    ar.push(words[i]);
+//   for (let i = 0; i < words.length; i++) {
+//     ar.push(words[i]);
+//   }
+// };
+
+//NO 8
+//MEAN
+let mean = (ar) => {
+  let sum = 0;
+
+  ar.forEach((numb) => {
+    sum += numb;
+  });
+
+  return sum / ar.length;
+};
+
+//Median
+let median = (ar) => {
+  let sorted = ar.sort((a, b) => {
+    return a - b;
+  });
+
+  let md = Math.floor(ar.length / 2);
+  if (ar.length % 2 == 0) {
+    return (sorted[md - 1] + sorted[md]) / 2;
+  } else {
+    return sorted[md];
   }
 };
 
-// //NO 9
-// //MEAN
-// let mean = (ar) => {
-//   let sum = 0;
+//MODUS
+let mode1 = (ar) => {
+  let number = []; //unique number in 'ar' array
+  let count = []; //store how many each number appear in 'ar'
+  let un; //
 
-//   ar.forEach((numb) => {
-//     sum += numb;
-//   });
+  for (let i = 0; i < ar.length; i++) {
+    //check if ar[i] already included in 'number' array
+    if (!number.includes(ar[i])) {
+      number.push(ar[i]);
+      count.push(0);
+      un = number.indexOf(ar[i]);
+    } else {
+      continue; //skip below steps
+    }
 
-//   return sum / ar.length;
-// };
+    //check how many ar[i] included in 'ar'
+    for (let j = 0; j < ar.length; j++) {
+      if (ar[j] === number[un]) {
+        count[un] += 1;
+      }
+    }
+  }
 
-// //Median
-// let median = (ar) => {
-//   let sorted = ar.sort((a, b) => {
-//     return a - b;
-//   });
+  //Modus
+  let maxIndex = 0;
+  for (let i = 0; i < count.length; i++) {
+    if (count[i] > count[maxIndex]) {
+      maxIndex = i; //index of larger value in 'count' array
+    }
+  }
 
-//   let md = Math.floor(ar.length / 2);
-//   if (ar.length % 2 == 0) {
-//     return (sorted[md - 1] + sorted[md]) / 2;
-//   } else {
-//     return sorted[md];
-//   }
-// };
+  console.log(`Original data: ${ar}`);
+  console.log(`Number array: ${number}`);
+  console.log(`Count array: ${count}`);
+  console.log(`Modus: ${number[maxIndex]}`);
+};
 
-// //Mode
-// let mode = (ar) => {
-//   let number = [];
-//   let count = [];
-//   let check;
-//   for (let i = 0; i < ar.length; i++) {
-//     if (!number.includes(ar[i])) {
-//       number.push(ar[i]);
-//       count.push(0);
-//       check = number.indexOf(ar[i]);
-//     } else {
-//       continue;
-//     }
-//     for (let j = 0; j < ar.length; j++) {
-//       if (ar[j] === number[check]) {
-//         count[check] += 1;
-//       }
-//     }
-//   }
+let modus = (ar) => {
+  let mod = {};
+  let max = [];
+  let ind = 0;
+  console.log(mod.angka);
 
-//   console.log(ar);
-//   console.log(number);
-//   console.log(count);
-// };
+  for (let i = 0; i < ar.length; i++) {
+    if (!mod[`${ar[i]}`]) {
+      mod[`${ar[i]}`] = 0;
+    }
 
-// let data = [1, 2, 3, 2, 5, 2, 1, 2];
-// let data1 = [4, 2, 4, 7, 5, 9];
-// mode(data);
+    mod[`${ar[i]}`] += 1;
+  }
+
+  console.log(mod);
+
+  for (let j in mod) {
+    if (mod[`${j}`] > ind) {
+      max = [j]; //key
+      ind = mod[`${j}`]; //value
+    } else if (mod[`${j}`] == ind) {
+      max.push(j); //if modus more than 1
+    }
+
+    // for (let k in mod) {
+    //   if (mod[`${k}`] == ind) {
+    //     max.push();
+    //   }
+    // }
+  }
+
+  console.log(max);
+};
+
+let data = [1, 2, 3, 2, 5, 2, 1, 2];
+let data1 = [4, 2, 4, 7, 5, 9, 9];
+modus(data1);
